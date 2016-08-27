@@ -35,18 +35,20 @@ app.prototype.getUsers = function() {
 };
 
 app.prototype.renderTable = function(arr) {
+	var tbody = $('#result tbody');
+	tbody.text('');
 	$.each(arr, function(i, val) {
-		$('#result tbody').append('<tr>' +
-			'<th scope="row">' + (i + 1) + '</td>' +
-			'<td>' + val.firstName + '</td>' +
-			'<td>' + val.lastName + '</td>' +
-			'<td>' + val.address + '</td>' +
-			'<td>' + val.phone + '</td>' +
-			'<td><button type="button" class="btn btn-xs btn-success">' +
-			'<span class="glyphicon glyphicon-pencil"><span></button>  ' +
-			'<button type="button" class="btn btn-xs btn-danger">' +
-			'<span class="glyphicon glyphicon-remove"><span></button></td>' +
-			'</tr>');
+		tbody.append('<tr>' +
+		'<th scope="row">' + (i + 1) + '</td>' +
+		'<td>' + val.firstName + '</td>' +
+		'<td>' + val.lastName + '</td>' +
+		'<td>' + val.address + '</td>' +
+		'<td>' + val.phone + '</td>' +
+		'<td><button type="button" class="btn btn-xs btn-success">' +
+		'<span class="glyphicon glyphicon-pencil"><span></button>  ' +
+		'<button type="button" class="btn btn-xs btn-danger">' +
+		'<span class="glyphicon glyphicon-remove"><span></button></td>' +
+		'</tr>');
 	});
 };
 
