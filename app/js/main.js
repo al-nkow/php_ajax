@@ -6,14 +6,67 @@ function app() {
 
 app.prototype.initEvents = function () {
 	var self = this;
-    // $(document.body).on('submit', '#addform', function (e) {      
-    //     e.preventDefault();
-    //     self.addUser($(this));
-    // });
+
+    $(document.body).on('click', '#addUser', function () {   
+        self.addUser();
+    });
+
     $('#getbut').on('click', function() {
     	self.getUsers();
     });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+app.prototype.addUser = function() {
+	
+	var data = {}
+	var arr = $('#userform').serializeArray();
+	
+	arr.forEach(function(item, i) {
+		data[item.name] = item.value;
+	});
+
+	console.log('DATA:', data);
+
+	$.ajax({
+		type: 'POST',
+		url: 'dist/php/adduser.php',
+		data: data,
+		success: function(res, status, xhr){
+			if (xhr.status != 200) return false;
+			console.log('result: ', res);
+		},
+		error: function(xhr, status, error){
+			console.log('Error! ' + xhr.status + ' ' + error + ' ' + status);
+		}
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.prototype.getUsers = function() {
 	var self = this;
