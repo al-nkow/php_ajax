@@ -14,6 +14,7 @@ if (mysqli_connect_errno()) {
 
 $connection->query('SET NAMES "UTF-8"');
 
+// $sql = 'SELECT * FROM `users` ORDER BY `id` DESC';
 $sql = 'SELECT * FROM `users`';
 $result = $connection->query($sql);
 $records = $result->fetch_all(MYSQLI_ASSOC);
