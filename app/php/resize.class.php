@@ -42,28 +42,8 @@ class ImageResize {
 			$this->thumbnail_size = $config["thumbnail_size"];
 			$this->thumbnail_prefix = $config["thumbnail_prefix"];
 
-
-
-
-
-
-
-
-
 			$this->destination_dir = $config["upload_url"].$config["destination_folder"];
 			$this->thumbnail_destination_dir = $config["upload_url"].$config["thumbnail_destination_folder"];
-
-
-
-
-
-
-
-
-
-
-
-
 
 			$this->random_file_name = $config["random_file_name"];
 			$this->quality = $config["quality"];
@@ -188,43 +168,12 @@ class ImageResize {
 	//save image to destination
 	private function save_image(){
 
-
-
-
-
-
-
-
-
-
-
-		
 		if(!file_exists($this->save_dir)){ //try and create folder if none exist
+			// echo $this->save_dir.'____________';
 			if(!mkdir($this->save_dir, 0755, true)){
 				throw new Exception($this->save_dir . ' - directory doesn\'t exist!');
 			}
 		}
-		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 		switch($this->image_type){//determine mime type
 			case 'image/png': 

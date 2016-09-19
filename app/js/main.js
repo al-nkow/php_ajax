@@ -78,37 +78,18 @@ app.prototype.showUploadFileModal = function(id){
 	$('#uploadModal .userid').val(id);
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.prototype.uploadFile = function(){
 
 	var files = $('#uploadform input[type="file"]')[0].files;
 
-	// console.log('file upload');
+	if (!files.length) {
+		alert('Select files');
+		return false;
+	}
+
 	//configuration
 	var max_file_size           = 2048576; //allowed file size. (1 MB = 1048576)
 	var allowed_file_types      = ['image/png', 'image/gif', 'image/jpeg', 'image/pjpeg']; //allowed file types
-	// var result_output           = '#output'; //ID of an element for response output
-	// var my_form_id              = '#upload_form'; //ID of an element for response output
 	var total_files_allowed     = 3; //Number files allowed to upload
 
 	var error = []; //errors
@@ -146,13 +127,10 @@ app.prototype.uploadFile = function(){
         return false;
     }
 
-
     // TODO: Здесь запустить какой-то спинербол или индикатор загрузки или спрятать кнопку загрузки
     // еще флаг какой-то - защита от повторной попытки загрузить файлы пока эти не прогрузились
 
     var form_data = new FormData($('#uploadform')[0]); //Creates new FormData object
-    console.log(form_data); 
-
     $.ajax({
         url : 'dist/php/upload.php',
         type: "POST",
@@ -162,12 +140,8 @@ app.prototype.uploadFile = function(){
         processData:false,
         mimeType:"multipart/form-data"
     }).done(function(res){
-    	console.log('======= RESULT =======');
-    	console.log(res);
-    	console.log('======================');
-        // $(my_form_id)[0].reset(); //reset form
-        // $(result_output).html(res); //output response from server
-        // submit_btn.val("Upload").prop( "disabled", false); //enable submit button once ajax is done
+    	$('#uploadform')[0].reset(); //reset form
+        console.log(JSON.parse(res));
     });
 };
 
