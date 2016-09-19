@@ -41,8 +41,30 @@ class ImageResize {
 			$this->image_max_size = $config["image_max_size"];
 			$this->thumbnail_size = $config["thumbnail_size"];
 			$this->thumbnail_prefix = $config["thumbnail_prefix"];
-			$this->destination_dir = $config["destination_folder"];
-			$this->thumbnail_destination_dir = $config["thumbnail_destination_folder"];
+
+
+
+
+
+
+
+
+
+			$this->destination_dir = $config["upload_url"].$config["destination_folder"];
+			$this->thumbnail_destination_dir = $config["upload_url"].$config["thumbnail_destination_folder"];
+
+
+
+
+
+
+
+
+
+
+
+
+
 			$this->random_file_name = $config["random_file_name"];
 			$this->quality = $config["quality"];
 			$this->file_data = $config["file_data"];
@@ -165,12 +187,45 @@ class ImageResize {
 	
 	//save image to destination
 	private function save_image(){
+
+
+
+
+
+
+
+
+
+
+
+		
 		if(!file_exists($this->save_dir)){ //try and create folder if none exist
 			if(!mkdir($this->save_dir, 0755, true)){
 				throw new Exception($this->save_dir . ' - directory doesn\'t exist!');
 			}
 		}
 		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		switch($this->image_type){//determine mime type
 			case 'image/png': 
 				imagepng($this->new_canvas, $this->save_dir.$this->new_file_name); imagedestroy($this->new_canvas); return $this->new_file_name; 
