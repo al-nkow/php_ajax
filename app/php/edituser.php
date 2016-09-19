@@ -1,17 +1,6 @@
 <?php
 
-$host = 'localhost';
-$base = 'dbusers';
-$user = 'root';
-$pass = 'root';
-
-$connection = @new mysqli($host, $user, $pass, $base);
-
-if (mysqli_connect_errno()) {
-    die(mysqli_connect_error());
-}
-
-$connection->query('SET NAMES "UTF-8"');
+require 'database.php';
 
 $firstname = trim($_POST[first_name]); // убрать лишние пробелы в начале и в конце
 $lastname  = trim($_POST[last_name]);

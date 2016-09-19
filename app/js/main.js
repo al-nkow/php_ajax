@@ -31,7 +31,8 @@ app.prototype.initEvents = function () {
     });
 
     $('#uploadImage').on('click', function (event) {
-    	self.uploadFile();
+    	var iditem = $('#uploadModal .userid').val();
+    	self.uploadFile(iditem);
     });
 
     $('#getbut').on('click', function() {
@@ -78,8 +79,8 @@ app.prototype.showUploadFileModal = function(id){
 	$('#uploadModal .userid').val(id);
 };
 
-app.prototype.uploadFile = function(){
-
+app.prototype.uploadFile = function(iditem){
+	var self = this;
 	var files = $('#uploadform input[type="file"]')[0].files;
 
 	if (!files.length) {
@@ -141,41 +142,28 @@ app.prototype.uploadFile = function(){
         mimeType:"multipart/form-data"
     }).done(function(res){
     	$('#uploadform')[0].reset(); //reset form
-        console.log(JSON.parse(res));
+        self.setUserPhoto(iditem, JSON.parse(res));
     });
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.prototype.setUserPhoto = function(id, data) {
+	var self = this;
+	data.id = id;
+	$.ajax({
+		type: 'POST',
+		url: 'dist/php/setphoto.php',
+		data: data,
+		success: function(res, status, xhr){
+			if (xhr.status != 200) return false;
+			console.log('result: ', res);
+			self.getUsers();
+			$('#uploadModal').modal('hide');
+		},
+		error: function(xhr, status, error){
+			console.log('Error! ' + xhr.status + ' ' + error + ' ' + status);
+		}
+	});
+}
 
 app.prototype.addUser = function() {
 	var self = this;
@@ -230,8 +218,13 @@ app.prototype.renderTable = function(arr) {
 	var tbody = $('#result tbody');
 	tbody.text('');
 	$.each(arr, function(i, val) {
+		var img = '';
+		if (val.thumb) {
+			img = '<img src="images/'+val.thumb+'" alt="" class="img-circle">';
+		}
 		tbody.append('<tr>' +
-		'<th scope="row">' + (i + 1) + '</td>' +
+		'<th scope="row">' + (i + 1) + '</th>' +
+		'<td>' + img + '</td>' +
 		'<td>' + val.firstName + '</td>' +
 		'<td>' + val.lastName + '</td>' +
 		'<td>' + val.address + '</td>' +
